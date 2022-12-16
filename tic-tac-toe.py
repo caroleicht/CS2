@@ -97,10 +97,12 @@ def O(board):
 ### function takes input from X player
 ### inputs: board (list); y (int that dictates who's turn it is)
 ### outputs: returns o_player (str, player input)
-    print(' ')                                                                                          # blank spacer line
-    o_player = input('Player O, please input the letter spot where you would like to place an O: ')     # str, ex: 'a', user communicates where they would like to place an 'O'
-    print(' ')                                                                                          # blank spacer line
-    return o_player                                                                                     # str, player input
+    x = 0
+    while x == 0:
+        print(' ')                                                                                          # blank spacer line
+        o_player = input('Player O, please input the letter spot where you would like to place an O: ')     # str, ex: 'a', user communicates where they would like to place an 'O'
+        print(' ')                                                                                          # blank spacer line
+        return o_player
 
 def win(board):
 ### function determines who wins the game
@@ -152,36 +154,42 @@ def main():
 ### main function, calls all other functions
 ### no intputs
 ### output: prints board and communicates results of game to users
-    board = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]     # list, board before edited in functions
-    y = 0                                                           # int, 0, variable will dictate which player's turn it is
-    turns = 0                                                       # int, 0, variable counts number of inputs the users have played
+    try:                                                                # error check
+        board = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]     # list, board before edited in functions
+        y = 0                                                           # int, 0, variable will dictate which player's turn it is
+        turns = 0                                                       # int, 0, variable counts number of inputs the users have played
 
-    while turns < 9:                                                # loop, so game continues until someone wins or a tie is reached
-        x_player = X(board)                                         # str, ex: 'a', input from user, calls X() function
-        board = move(board, x_player, y)                            # list, new board after 'X' has been substituted for user input letter
-        print(print_board(board))                                   # print, call print_board() function
-        score = win(board)                                          # int, ex: '1', calls win() function, determines if there is a winner yet
-        if score == 1:                                              # bool, if score = 1, player X wins
-            return print('''                                        
-X player won the game!
-''')                                                                # 1st line: spacer line; 2nd line: 'X player won the game!'; 3rd line: spacer line
-        y = y + 1                                                   # int, 1, tells move() function to place an 'O' for next turn
-        turns = turns + 1                                           # int, ex: '1', controls while loop
+        while turns < 9:                                                # loop, so game continues until someone wins or a tie is reached
+            x_player = X(board)                                         # str, ex: 'a', input from user, calls X() function
+            board = move(board, x_player, y)                            # list, new board after 'X' has been substituted for user input letter
+            print(print_board(board))                                   # print, call print_board() function
+            score = win(board)                                          # int, ex: '1', calls win() function, determines if there is a winner yet
 
-        if turns >= 8:                                              # bool, if turns = 8 and no one has won, the board is full
-            return print('''
-the game has ended in a tie
-''')                                                                # 1st line: spacer line; 2nd line: 'the game has ended in a tie'; 3rd line: spacer line
+            if score == 1:                                              # bool, if score = 1, player X wins
+                return print('''                                        
+    X player won the game!
+    ''')                                                                # 1st line: spacer line; 2nd line: 'X player won the game!'; 3rd line: spacer line
+            y = y + 1                                                   # int, 1, tells move() function to place an 'O' for next turn
+            turns = turns + 1                                           # int, ex: '1', controls while loop
 
-        o_player = O(board)                                         # str, ex: 'b', input from user, calls O() function
-        board = move(board, o_player, y)                            # list, new board after 'O' has been substituted for user input letter
-        print(print_board(board))                                   # print, call print_board() function
-        score = win(board)                                          # int, ex: '-1', calls win() function, determines if there is a winner yet
-        if score == -1:                                             # bool, if score = -1, player O wins
-            return print('''
-O player won the game!
-''')                                                                # 1st line: spacer line; 2nd line: 'O player won the game!'; 3rd line: spacer line
-        y = y - 1                                                   # int, 0, tells move() function to place an 'X' for next turn
-        turns = turns + 1                                           # int, ex: '2', controls while loop
+            if turns >= 8:                                              # bool, if turns = 8 and no one has won, the board is full
+                return print('''
+    the game has ended in a tie
+    ''')                                                                # 1st line: spacer line; 2nd line: 'the game has ended in a tie'; 3rd line: spacer line
 
-print(main())               
+            o_player = O(board)                                         # str, ex: 'b', input from user, calls O() function
+            board = move(board, o_player, y)                            # list, new board after 'O' has been substituted for user input letter
+            print(print_board(board))                                   # print, call print_board() function
+            score = win(board)                                          # int, ex: '-1', calls win() function, determines if there is a winner yet
+            if score == -1:                                             # bool, if score = -1, player O wins
+                return print('''
+    O player won the game!
+    ''')                                                                # 1st line: spacer line; 2nd line: 'O player won the game!'; 3rd line: spacer line
+            y = y - 1                                                   # int, 0, tells move() function to place an 'X' for next turn
+            turns = turns + 1                                           # int, ex: '2', controls while loop
+
+    except:                                                                     # exception
+        print('please input available location (lowercase letter from a-i)')    # talks to user
+        main()                                                                  # call main
+
+print(main())                                                       # print outputs, calls main() function
