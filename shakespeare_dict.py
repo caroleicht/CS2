@@ -774,50 +774,54 @@ def macbeth_cleanse(dict):
     del dict['england']
 
 
-    return dict                      # return dict, dictionary with words removed
+    return dict                         # return dict, dictionary with words removed
 
 def get_data(dict, int):
 ### function takes numbers or words and puts them in separate list
 ### inputs: dict - dictionary with words as keys and number values; 
 ###         int - int either -1 or 0, dictates where function takes words or numbers
 ### output: l 
-    l = list()
-    for line in dict:
-        num = line[int]
-        l.append(num)
-    return l
+    l = list()                          # list, empty list
+    for line in dict:                   # goes through each line in dict              
+        num = line[int]                 # str/int, either word key or number value
+        l.append(num)                   #list, add either key or value
+    return l                            # list
 
 def main():
-    romeo = open('romeo&juliet')
-    romeo = cleanse_file(romeo)
+### main function
+### inputs: NONE
+### outouts: ' '
+    
+    romeo = open('romeo&juliet')        # io.TextIOWrapper
+    romeo = cleanse_file(romeo)         # list, list of strings from file
 
-    romeo_dict = make_dict(romeo)
-    romeo_dict = romeo_cleanse(romeo_dict)
-    romeo_dict = sorted(romeo_dict.items(), key=lambda x: x[1])
-    romeo_dict = romeo_dict[-30:]
+    romeo_dict = make_dict(romeo)                                                       # dict, words as keys, ints as values
+    romeo_dict = romeo_cleanse(romeo_dict)                                              # dict, certain words removed                       
+    romeo_dict = sorted(romeo_dict.items(), key=lambda x: x[1])                         # dict, sorted by number
+    romeo_dict = romeo_dict[-30:]                                                       # dict, last 30 key:values
 
-    romeo_data = get_data(romeo_dict, -1)
-    romeo_keys = get_data(romeo_dict, 0)
+    romeo_data = get_data(romeo_dict, -1)                                               # list, just int values
+    romeo_keys = get_data(romeo_dict, 0)                                                # list, just word keys
 
-    color = seaborn.color_palette('pastel')
-    plt.pie(romeo_data, labels = romeo_keys, colors = color, autopct = '%.0f%%')
-    plt.show()
+    color = seaborn.color_palette('pastel')                                             # assigns colors for graph
+    plt.pie(romeo_data, labels = romeo_keys, colors = color, autopct = '%.0f%%')        # creates pie chart
+    plt.show()                                                                          # shows pie chart
 
-    macbeth = open('macbeth')
-    macbeth = cleanse_file(macbeth)
+    macbeth = open('macbeth')                                                           # io.TextIOWrapper
+    macbeth = cleanse_file(macbeth)                                                     # list, list of strings from file
 
-    macbeth_dict = make_dict(macbeth)
-    macbeth_dict = macbeth_cleanse(macbeth_dict)
-    macbeth_dict = sorted(macbeth_dict.items(), key=lambda x: x[1])
-    macbeth_dict = macbeth_dict[-30:]
+    macbeth_dict = make_dict(macbeth)                                                   # dict, words as keys, ints as values   
+    macbeth_dict = macbeth_cleanse(macbeth_dict)                                        # dict, certain words removed
+    macbeth_dict = sorted(macbeth_dict.items(), key=lambda x: x[1])                     # dict, sorted by number
+    macbeth_dict = macbeth_dict[-30:]                                                   # dict, last 30 key:values
 
-    macbeth_data = get_data(macbeth_dict, -1)
-    macbeth_keys = get_data(macbeth_dict, 0)
+    macbeth_data = get_data(macbeth_dict, -1)                                           # list, just int values
+    macbeth_keys = get_data(macbeth_dict, 0)                                            # list, list of strings from file
 
-    color = seaborn.color_palette('pastel')
-    plt.pie(macbeth_data, labels = macbeth_keys, colors = color, autopct = '%.0f%%')
-    plt.show()
+    color = seaborn.color_palette('pastel')                                             # assigns colors for graph
+    plt.pie(macbeth_data, labels = macbeth_keys, colors = color, autopct = '%.0f%%')    # creates pie chart
+    plt.show()                                                                          # shows pie chart
 
-    return ' '
+    return ' '                                                                          # returns ' '
 
-print(main())
+print(main())                                                                           # runs main
